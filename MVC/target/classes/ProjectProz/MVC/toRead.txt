@@ -1,0 +1,7 @@
+4
+4 Bass_Standard	41,20 E	55 A 73,42 D 98 G	
+5 Bass_5_String_E 30,87 B 41,20 E 55 A 73,42 D 98 G
+6 Guitar_Standard_E 82,41 E 110,00 A 146,83 D 196,00 G 246,94 H	329,63 e
+6 Guitar_Drop_D 73,42 D1	110,00 A 146,83 D 196,00 G 246,94 H 329,63 e	
+						
+
