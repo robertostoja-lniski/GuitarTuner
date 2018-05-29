@@ -1,9 +1,12 @@
-package ProjectProz.MVC;
+package ProjectProz.View;
 
 import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import ProjectProz.Controller.ModeController;
+import ProjectProz.Model.Model;
 
 /**
  * @author Robert
@@ -11,7 +14,6 @@ import javax.swing.SwingConstants;
  */
 public class ManualModeView extends ModeBaseView {
 	
-	ModeController controller;
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -19,13 +21,20 @@ public class ManualModeView extends ModeBaseView {
 	 * @param controller - mode controller
      * @param uppmenuview - upper menu (the same for every frame)
 	 */
-    public ManualModeView(ModeController controller, Model model, UppMenuView uppmenuview) {
-    	    super(controller, model, uppmenuview);
-    	    model.setView(this);
-    	    controller.setModeType(false);
+    public ManualModeView(Model model, UppMenuView uppmenuview) {
+    	    super(model, uppmenuview); 	    
     	    initLabels();
     	    setModeName("Manual Mode");
     	    
+    }
+    public void setSoundView(int i, String noteName) {
+    	signSwap();
+    	setSigns(noteName);
+    	setStop(true);
+    }
+    public void setController(	ModeController controller) {
+    	super.setController(controller);
+    	controller.setModeType(false);
     }
     /**
      * Initialises labels

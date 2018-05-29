@@ -1,7 +1,12 @@
 package ProjectProz.MVC;
 
 import java.awt.EventQueue;
-import java.io.FileNotFoundException;
+
+import ProjectProz.Controller.MenuController;
+import ProjectProz.Controller.UppMenuController;
+import ProjectProz.Model.Model;
+import ProjectProz.View.MenuView;
+import ProjectProz.View.UppMenuView;
 
 public class MVCTuner {
    public static void main(String[] args) {
@@ -16,14 +21,17 @@ public class MVCTuner {
 	    	  // model.saveTuningToNewFile("NewFile.txt");
 	    	   model.setTuning("Guitar_Standard_E");
 	    	   
-	    	   UppMenuController controller1 = new UppMenuController(model, 2);
-	    	   UppMenuView uppmenuview = new UppMenuView(controller1, model, 2);
-	    	   MenuController controller = new MenuController(model);
-	    	   MenuView view = new MenuView(controller,model, uppmenuview);
-	    	   view.removeWarning();
+	    	   UppMenuController controller1 = new UppMenuController(model);
 	    	   
+	    	   UppMenuView uppmenuview = new UppMenuView(model);
+	    	   uppmenuview.setController(controller1);
+	    	   
+	    	   MenuView view = new MenuView(model, uppmenuview);	    	   
+	    	   MenuController controller = new MenuController(model,view);	    	   
+	    	   view.setController(controller);
+	    	   controller1.setView(view);
 	       }
 	   });
    }
-   
+ 
 }

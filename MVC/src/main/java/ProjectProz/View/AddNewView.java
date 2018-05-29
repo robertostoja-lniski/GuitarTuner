@@ -1,10 +1,17 @@
-package ProjectProz.MVC;
+package ProjectProz.View;
 
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import ProjectProz.Controller.AddNewController;
+import ProjectProz.Model.Model;
 
 /**
  * @author Robert
@@ -14,23 +21,20 @@ import javax.swing.JTextField;
  */
 public class AddNewView extends JFrame {
 
-	AddNewController controller;
 	Model model;
 	int whereToReturn;
 	private static final long serialVersionUID = 1L;
 	JLabel jLabelName, jLabelChoose, jLabelChosen, jLabelChosenString, jLabelFreq, jLabelNote;
 	JTextField[] setupTab;
-	
+	JButton applyButton,backButton;
 	/**
 	 * 
 	 * @param controller - add new controller
 	 * @param whereToReturn 0 for manual, 1 for auto and 2 for menu
 	 */
-	AddNewView(AddNewController controller, Model model, int whereToReturn) {
+	public AddNewView(Model model, int whereToReturn) {
 		
-		this.controller = controller;
 		this.whereToReturn = whereToReturn;
-		model.setView(this);
 		setupTab = new JTextField[20];
 	
 		setSize(300,500);
@@ -42,10 +46,20 @@ public class AddNewView extends JFrame {
 	/**
 	 * button initialisation
 	 */
+	public void setController(AddNewController controller) {
+		applyButton.addActionListener(controller);
+		backButton.addActionListener(controller);
+		for (int i=1; i<8; i++) {
+			setupTab[2*i].addActionListener(controller);
+	    	setupTab[2*i+1].addActionListener(controller);
+		}
+		
+    	 
+	}
 	private void initButtons() {
 				
-		JButton applyButton = new JButton("Apply");
-		JButton backButton = new JButton("Back");
+		applyButton = new JButton("Apply");
+		backButton = new JButton("Back");
 		
 		applyButton.setBounds(35, 380, 100, 50);
 		backButton.setBounds(155, 380, 100, 50);
@@ -53,8 +67,7 @@ public class AddNewView extends JFrame {
 		getContentPane().add(applyButton);
 		getContentPane().add(backButton);
 		
-		applyButton.addActionListener(controller);
-		backButton.addActionListener(controller);
+		
 	}
 	/**
 	 * 
@@ -111,9 +124,7 @@ public class AddNewView extends JFrame {
         	 setupTab[2*i].setActionCommand(f);
         	 setupTab[2*i+1].setActionCommand(n);
         	         	         	 
-        	 setupTab[2*i].addActionListener(controller);
-        	 setupTab[2*i+1].addActionListener(controller);
-        	 
+        	
         	// System.out.println(setupTab[2*i].getText().equals(""));   
         	 
         	 getContentPane().add(setupTab[2*i]);
@@ -124,5 +135,28 @@ public class AddNewView extends JFrame {
          getContentPane().add(jLabelNote);
          getContentPane().add(jLabelFreq);
        
+	}
+	/**
+	 * features dialog error window that data format is of a wrong type
+	 */
+	public void returnErrorMsg() {
+    	JOptionPane.showMessageDialog(this, "Wrong data format");
+    }
+	/**
+	 * features dialog error window that few string can't have the same name
+	 */
+	public void returnTheSameNameError() {
+    	JOptionPane.showMessageDialog(this, "Few strings can't have the same name");
+    }
+	/**
+	 * closes the view
+	 */
+	public void closeAddOption() {
+		try {
+			WindowEvent winClosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
+			Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
+		} catch (Exception e) {
+			System.out.println("In model.closeAddOption() null pointer exception");
+		}
 	}
 }

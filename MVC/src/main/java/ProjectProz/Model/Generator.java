@@ -1,4 +1,4 @@
-package ProjectProz.MVC;
+package ProjectProz.Model;
 
 import javax.sound.sampled.*;
 

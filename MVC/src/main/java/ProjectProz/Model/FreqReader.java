@@ -1,4 +1,4 @@
-package ProjectProz.MVC;
+package ProjectProz.Model;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -166,9 +166,10 @@ public class FreqReader implements Runnable{
 		    	} else {
 		    		x = 150;
 		    	}
-		    }
-		    model.drawLine(150-(int)x);
-		    model.setFreqInfo(f);
+		    }  
+		    model.setScaledFreq(150-(int)x);
+		    model.setUnscaledFreq(f);
+		    
     }
 	public void run() {
 
@@ -180,6 +181,6 @@ public class FreqReader implements Runnable{
 		//System.out.println(findFrequency());
 		findFrequency();
 		showFrequency();
-		
+
 	}
 }

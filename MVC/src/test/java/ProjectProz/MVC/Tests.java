@@ -10,6 +10,17 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import ProjectProz.Controller.AddNewController;
+import ProjectProz.Controller.MenuController;
+import ProjectProz.Controller.ModeController;
+import ProjectProz.Controller.UppMenuController;
+import ProjectProz.Model.Model;
+import ProjectProz.View.AddNewView;
+import ProjectProz.View.AutoTuningPanelView;
+import ProjectProz.View.MenuView;
+import ProjectProz.View.ModeBaseView;
+import ProjectProz.View.UppMenuView;
+
 public class Tests {
 
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -230,15 +241,11 @@ public class Tests {
 		model.tune(-10000);
 	}
 	@Test
-	public void drawLine() {
+	public void settingFreq() {
 		Model model = new Model();
-		model.drawLine(888);
-		
-		String expected = "In model.drawLine() null pointer exception";
-		String input = outContent.toString();		
-		String actual = input.substring(input.length() - expected.length()-2, input.length()-2);
-		
-		assertEquals(expected , actual);		
+		model.setScaledFreq(888);
+		double actual = model.getScaledFreq();
+		assertEquals(888 , actual, 0);		
 	}
 	@Test
 	public void getSizeUninitialised() {
@@ -256,7 +263,7 @@ public class Tests {
 		Model model = new Model();	
 		model.sound(1900);	
 		
-		String expected = "In model.sound(int) null pointer exception";
+		String expected = "In model.sound(int) index out of bounds.";
 		String input = outContent.toString();		
 		String actual = input.substring(input.length() - expected.length()-2, input.length()-2);
 		
@@ -273,71 +280,27 @@ public class Tests {
 		
 		assertEquals(expected , actual);
 	}
-	@Test
-	public void setManualDefaultLayout() {
-		Model model = new Model();	
-		model.initializeTab();
-		model.setManualDefaultLayout();
-		
-		String expected = "In model.setManualDefaultLayout null pointer exception";
-		String input = outContent.toString();		
-		String actual = input.substring(input.length() - expected.length()-2, input.length()-2);
-		
-		assertEquals(expected , actual);
-	}
-	@Test
-	public void setAutoDefaultLayout() {
-		Model model = new Model();	
-		model.initializeTab();
-		model.setAutoDefaultLayout();
-		
-		String expected = "In model.setAutoDefaultLayout null pointer exception";
-		String input = outContent.toString();		
-		String actual = input.substring(input.length() - expected.length()-2, input.length()-2);
-		
-		assertEquals(expected , actual);
-	}
+	
 	@Test
 	public void closeMode() {
 		Model model = new Model();	
 		model.initializeTab();
-		model.closeMode(true);
+		model.getPointY(0);
 		
-		String expected = "In model.closeMode(boolean) null pointer exception";
-		String input = outContent.toString();		
-		String actual = input.substring(input.length() - expected.length()-2, input.length()-2);
-		
-		assertEquals(expected , actual);
-	}
-	@Test
-	public void closeMenu() {
-		Model model = new Model();	
-		model.closeMenu();
-		
-		String expected = "In model.closeMenu() null pointer exception";
-		String input = outContent.toString();		
-		String actual = input.substring(input.length() - expected.length()-2, input.length()-2);
-		
-		assertEquals(expected , actual);
-	}
-	@Test
-	public void closeAddOption() {
-		Model model = new Model();	
-		model.closeAddOption();
-		
-		String expected = "In model.closeAddOption() null pointer exception";
+		String expected = "";
 		String input = outContent.toString();		
 		String actual = input.substring(input.length() - expected.length()-2, input.length()-2);
 		
 		assertEquals(expected , actual);
 	}
 	
+	
 	// view tests
 	@Test 
 	public void AddNewViewTest() {
 		Model model = new Model();
 		AddNewController controller = new AddNewController(model , 0);
-		AddNewView newView = new AddNewView(controller, model, 0);
+		AddNewView newView = new AddNewView(model, 0);
 		
 		String actual = newView.getTextField(0);
 		String expected = "";
@@ -374,11 +337,11 @@ public class Tests {
 	@Test 
 	public void MenuViewUnknownPhoto() {
 		Model model = new Model();
-		MenuController controller = new MenuController(model);
-		UppMenuController uppMenuController = new UppMenuController(model,0);
-		UppMenuView uppMenuView = new UppMenuView(uppMenuController, model, 0);
+		MenuController controller = new MenuController(model, null);
+		UppMenuController uppMenuController = new UppMenuController(model);
+		UppMenuView uppMenuView = new UppMenuView(model);
 
-		MenuView testView = new MenuView(controller, model, uppMenuView);
+		MenuView testView = new MenuView(model, uppMenuView);
 		
 		testView.initLabels("NONEPHOTO.png");
 		
@@ -396,11 +359,11 @@ public class Tests {
  	    model.setTuning("Guitar_Standard_E");
  	    
 		ModeController modeController = new ModeController(model);
-		UppMenuController uppMenuController = new UppMenuController(model,0);
-		UppMenuView uppMenuView = new UppMenuView(uppMenuController, model, 0);
+		UppMenuController uppMenuController = new UppMenuController(model);
+		UppMenuView uppMenuView = new UppMenuView(model);
 		
 		model.setFreqAt(0, 0);
-		ModeBaseView testView = new ModeBaseView(modeController, model, uppMenuView);
+		ModeBaseView testView = new ModeBaseView(model, uppMenuView);
 			
 		String expected = "In ModeView.initButtons() button num = 0";
 		String input = outContent.toString();		

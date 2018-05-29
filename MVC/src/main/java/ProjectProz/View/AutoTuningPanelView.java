@@ -1,4 +1,4 @@
-package ProjectProz.MVC;
+package ProjectProz.View;
 
 
 import java.awt.Graphics;
@@ -9,6 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import ProjectProz.Model.Model;
 
 /**
  * @author Robert
@@ -22,11 +24,11 @@ public class AutoTuningPanelView extends JPanel{
 	Model model;
 	JLabel foto, freqInfo;
 	
-	AutoTuningPanelView(Model model) {
+	public AutoTuningPanelView(Model model) {
 		    this.model = model;
 		    model.setTuningPanel(this);
 		    
-    		setXY();    		
+    		setDefaultXY();    		
     		initPanel();
     		initLabel();
     		setFoto("tunerAuto.jpg"); 		
@@ -42,6 +44,7 @@ public class AutoTuningPanelView extends JPanel{
         add(freqInfo);
 	}
 	public void setFreqInfo(double f) {
+		//double f = model.getUnscaledFreq();
 		String freq = String.valueOf(f);
 		freq = String.format("%.2f", f);
 		freqInfo.setText(freq+ " Hz");
@@ -49,7 +52,7 @@ public class AutoTuningPanelView extends JPanel{
 	/**
 	 *  sets default values of x and y for drawing a line
 	 */
-    public void setXY() {   	
+    public void setDefaultXY() {   	
     	x = 150;
     	y = 175;   	
     }
@@ -73,7 +76,7 @@ public class AutoTuningPanelView extends JPanel{
      * sets y based on circle equation and x param 
      */
     public void setXY(int x) {
-    	
+    	//int x = model.getScaledFreq();
     	if(x < 0 ) {
     		x = 0;
     		System.out.println("x changed to 0 - cannot be negative");

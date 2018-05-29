@@ -1,13 +1,9 @@
-package ProjectProz.MVC;
+package ProjectProz.View;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
-
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+
+import ProjectProz.Controller.ModeController;
+import ProjectProz.Model.Model;
 
 /**
  * @author Robert
@@ -15,7 +11,7 @@ import javax.swing.JPanel;
  */
 public class AutoModeView extends ModeBaseView {
 	
-	ModeController controller;
+	
 	private static final long serialVersionUID = 1L;
 	JLabel foto;
 	AutoTuningPanelView tuningPanel;
@@ -25,13 +21,15 @@ public class AutoModeView extends ModeBaseView {
 	 * @param controller - auto tuning controller
 	 * @param uppmenuview - upper menu (the same for every frame)
 	 */
-    public AutoModeView(ModeController controller, Model model, UppMenuView uppmenuview) {
-    		super(controller, model, uppmenuview);
-    		model.setView(this);
-    		controller.setModeType(true);   		
+    public AutoModeView( Model model, UppMenuView uppmenuview) {
+    		super(model, uppmenuview);	
     		initPanel();
     	//	setFoto();
     		setModeName("Auto Mode");    		
+    }
+    public void setController(ModeController controller) {
+    		super.setController(controller);
+    		controller.setModeType(true);
     }
     /**
      * @return returns reference to it's panel 
@@ -44,8 +42,18 @@ public class AutoModeView extends ModeBaseView {
      */
     public void initPanel() {
         tuningPanel = new AutoTuningPanelView(model);
-        tuningPanel.setXY();
+        tuningPanel.setDefaultXY();
     	getContentPane().add(tuningPanel);
+    }
+    /**
+     * sets tuning message
+     * @param name - displays name of a string that is being tuned
+     */
+    public void setTuningMessage(String name) {
+    	//System.out.println("hejo");
+    	String msg = "You are tuning " + name;
+    	//System.out.println(msg);
+    	setMessage(msg);
     }
     
 }
